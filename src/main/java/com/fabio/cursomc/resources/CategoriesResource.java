@@ -1,25 +1,28 @@
 package com.fabio.cursomc.resources;
 
 import com.fabio.cursomc.domain.Category;
+import com.fabio.cursomc.services.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoriesResource {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Category> getCategories(){
-        Category cat1 = new Category(1, "Informatica");
-        Category cat2 = new Category(2, "Office");
-        List<Category> categories = new ArrayList<>();
-        categories.add(cat1);
-        categories.add(cat2);
-        return categories;
+    @Autowired
+    private CategoryService categoryService;
+
+    @RequestMapping(value ="/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable Integer id){
+        return ResponseEntity.ok().body(categoryService.findById(id));
     }
 
 }
