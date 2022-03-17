@@ -19,7 +19,7 @@ public class CategoriesResource {
     private CategoryService categoryService;
 
     @RequestMapping(value ="/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable Integer id){
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id){
         return ResponseEntity.ok().body(categoryService.findById(id));
     }
 
