@@ -1,9 +1,13 @@
 package com.fabio.cursomc;
 
 import com.fabio.cursomc.domain.Category;
+import com.fabio.cursomc.domain.City;
 import com.fabio.cursomc.domain.Product;
+import com.fabio.cursomc.domain.State;
 import com.fabio.cursomc.repositories.CategoryRepository;
+import com.fabio.cursomc.repositories.CityRepository;
 import com.fabio.cursomc.repositories.ProductRepository;
+import com.fabio.cursomc.repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +24,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private StateRepository stateRepository;
+
+	@Autowired
+	private CityRepository cityRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -44,6 +54,16 @@ public class CursomcApplication implements CommandLineRunner {
 
 		categoryRepository.saveAll(Arrays.asList(c1,c2));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+
+		State s1 = new State(null, "Minas Gerais");
+		State s2 = new State(null, "São Paulo");
+
+		City city1 = new City(null,"Belo Horizonte", s1);
+		City city2 = new City(null, "Campinas", s2);
+		City city3 = new City(null, "São Paulo", s2);
+
+		stateRepository.saveAll(Arrays.asList(s1,s2));
+		cityRepository.saveAll(Arrays.asList(city1,city2,city3));
 
 	}
 }
