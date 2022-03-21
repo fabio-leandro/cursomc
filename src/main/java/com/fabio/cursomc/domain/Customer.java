@@ -2,28 +2,38 @@ package com.fabio.cursomc.domain;
 
 import com.fabio.cursomc.domain.enums.CustomerType;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
-public class Customer {
+@Entity
+public class Customer implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String email;
     private String cpfOuCnpj;
     private Integer type;
 
+    @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name ="PHONES")
     private Set<String> phones = new HashSet<>();
 
     public Customer(){}
 
-    public Customer(Integer id, String name, String email, String cpfOuCnpj, Integer type) {
+    public Customer(Integer id, String name, String email, String cpfOuCnpj, CustomerType type) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.type = type;
+        this.type = type.getCod();
     }
 
     public Integer getId() {
