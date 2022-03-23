@@ -1,6 +1,7 @@
 package com.fabio.cursomc.domain;
 
 import com.fabio.cursomc.domain.enums.CustomerType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Customer implements Serializable {
     private String cpfOuCnpj;
     private Integer type;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
