@@ -1,6 +1,7 @@
 package com.fabio.cursomc.domain;
 
 import com.fabio.cursomc.domain.enums.StatusPayment;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public abstract class Payment implements Serializable {
     private Integer id;
     private Integer statusPayment;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "demand_id")
     @MapsId

@@ -1,5 +1,8 @@
 package com.fabio.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -15,12 +18,15 @@ public class Demand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Temporal(TemporalType.TIMESTAMP)
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instant;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "demand")
     private Payment payment;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

@@ -1,6 +1,8 @@
 package com.fabio.cursomc.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ public class ItemDemand  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @EmbeddedId
     private ItemDemandPK id = new ItemDemandPK();
 
@@ -29,6 +32,7 @@ public class ItemDemand  implements Serializable {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public Demand getDemand(){
         return id.getDemand();
     }

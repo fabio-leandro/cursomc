@@ -35,7 +35,7 @@ public class CursomcApplication implements CommandLineRunner {
 	private AddressRepository addressRepository;
 
 	@Autowired
-	private OrderRepository orderRepository;
+	private DemandRepository orderRepository;
 
 	@Autowired
 	private PaymentRepository paymentRepository;

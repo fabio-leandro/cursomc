@@ -1,6 +1,7 @@
 package com.fabio.cursomc.domain;
 
 import com.fabio.cursomc.domain.enums.CustomerType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Customer implements Serializable {
     @CollectionTable(name ="PHONES")
     private Set<String> phones = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "customer")
     private List<Demand> demands = new ArrayList<>();
 
