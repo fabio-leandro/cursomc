@@ -2,12 +2,14 @@ package com.fabio.cursomc;
 
 import com.fabio.cursomc.domain.*;
 import com.fabio.cursomc.domain.enums.CustomerType;
+import com.fabio.cursomc.domain.enums.StatusPayment;
 import com.fabio.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +33,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -82,6 +90,18 @@ public class CursomcApplication implements CommandLineRunner {
 		customerRepository.save(cli1);
 		addressRepository.saveAll(Arrays.asList(e1,e2));
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Demand ped1 = new Demand(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Demand ped2 = new Demand(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+
+		cli1.getOrders().addAll(Arrays.asList(ped1, ped2));
+		Payment pagto1 = new CardPayment(null, StatusPayment.QUITADO, ped1, 6);
+		ped1.setPayment(pagto1);
+
+		Payment pagto2 = new SlipPayment(null, StatusPayment.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPayment(pagto2);
+		orderRepository.saveAll(Arrays.asList(ped1, ped2));
+		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
 	}
 }
