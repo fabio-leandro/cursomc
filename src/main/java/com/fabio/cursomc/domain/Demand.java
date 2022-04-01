@@ -3,7 +3,9 @@ package com.fabio.cursomc.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Demand implements Serializable {
@@ -27,6 +29,9 @@ public class Demand implements Serializable {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @OneToMany(mappedBy = "id.demand")
+    private Set<ItemDemand> items = new HashSet<>();
+
     public Demand(){}
 
     public Demand(Integer id, Date instant, Customer customer, Address address) {
@@ -34,6 +39,14 @@ public class Demand implements Serializable {
         this.instant = instant;
         this.customer = customer;
         this.address = address;
+    }
+
+    public Set<ItemDemand> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<ItemDemand> items) {
+        this.items = items;
     }
 
     public Integer getId() {
