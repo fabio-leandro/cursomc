@@ -18,4 +18,10 @@ public class CategoryService {
                         " and with id -> "+id));
     }
 
+    public Category insert(Category category){
+        return categoryRepository.save(category);
+    }
+
+
+
 }
