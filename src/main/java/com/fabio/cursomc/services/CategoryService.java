@@ -14,7 +14,7 @@ public class CategoryService {
 
     public Category findById(Integer id){
         return categoryRepository.findById(id)
-                .orElseThrow(()-> new ObjectNotFoundException("The object not found for "+Category.class.getName()+
+                .orElseThrow(()-> new ObjectNotFoundException("The object not found for "+Category.class.getSimpleName()+
                         " and with id -> "+id));
     }
 
@@ -22,6 +22,10 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public Category updateById(Integer id, Category category){
+        findById(id);
+        return categoryRepository.save(category);
+    }
 
 
 }
