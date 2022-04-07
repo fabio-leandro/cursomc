@@ -1,9 +1,11 @@
 package com.fabio.cursomc.services;
 
 import com.fabio.cursomc.domain.Category;
+import com.fabio.cursomc.exceptions.ObjectCannotBeDeleteException;
 import com.fabio.cursomc.exceptions.ObjectNotFoundException;
 import com.fabio.cursomc.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +29,13 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public void deleteById(Integer id){
+        findById(id);
+        try {
+            categoryRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ObjectCannotBeDeleteException("That category has products. It's not possible to delete whit id "+id);
+        }
+    }
 
 }
