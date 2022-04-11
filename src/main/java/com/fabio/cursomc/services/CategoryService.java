@@ -7,6 +7,9 @@ import com.fabio.cursomc.exceptions.ObjectNotFoundException;
 import com.fabio.cursomc.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,6 +48,11 @@ public class CategoryService {
     public List<CategoryDTO> findAll(){
         List<Category> categories = categoryRepository.findAll();
         return categories.stream().map(CategoryDTO::new).collect(Collectors.toList());
+    }
+
+    public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction),orderBy);
+        return categoryRepository.findAll(pageRequest);
     }
 
 }
