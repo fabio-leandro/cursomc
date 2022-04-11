@@ -1,6 +1,7 @@
 package com.fabio.cursomc.resources;
 
 import com.fabio.cursomc.domain.Category;
+import com.fabio.cursomc.dtos.CategoryDTO;
 import com.fabio.cursomc.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -38,6 +40,11 @@ public class CategoriesResource {
     public ResponseEntity<Void> deleteById(@PathVariable Integer id){
         categoryService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> findAll(){
+        return ResponseEntity.ok(categoryService.findAll());
     }
 
 }
