@@ -55,4 +55,8 @@ public class CategoryService {
         return categoryRepository.findAll(pageRequest);
     }
 
+    public Category fromDto(CategoryDTO categoryDTO){
+        return new Category(categoryDTO.getId(),categoryDTO.getName());
+    }
+
 }

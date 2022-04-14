@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class CategoriesResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Category category){
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO categoryDTO){
+        Category category = categoryService.fromDto(categoryDTO);
         Category obj = categoryService.insert(category);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
