@@ -5,6 +5,7 @@ import com.fabio.cursomc.exceptions.ObjectNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,6 +27,13 @@ public class ResourceExceptionHandler {
 
         MsgError msgError = new MsgError(HttpStatus.BAD_REQUEST.value(),e.getMessage(), Instant.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msgError);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<FieldErrors> validation(MethodArgumentNotValidException e, HttpServletRequest request){
+        FieldErrors fieldErrors = new FieldErrors(HttpStatus.BAD_REQUEST.value(), "Field validation Error.", Instant.now(),
+                e.getFieldError().getField(),e.getFieldError().getDefaultMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(fieldErrors);
     }
 
 
